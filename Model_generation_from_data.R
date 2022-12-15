@@ -80,11 +80,15 @@ for (i in 1:length(lambda_poss)){
                                ,family = "binomial")
       
       
-      beta0_to_beta_14 = c(working_model$a0,as.vector(working_model$beta)) 
+      beta0_to_beta_14 = c(working_model$a0,as.vector(working_model$beta))
+      # get individual values for gene dosage
       X0_to_X14 = c(1,x_vals[c1,])
+      # find liniar componat
       N = as.numeric(X0_to_X14) * as.numeric(as.vector(beta0_to_beta_14))
+      # ecponentiate be couse logistic 
       E = exp(sum(N))
       prob = E/(1+E)
+      # this is prediction we prob should have used predict.glmnet.... 
       if(prob > thresholds[k]){
         #we think they have an ND (1)
       num_TP = num_TP + Big$ND.score[c1]
